@@ -24,14 +24,7 @@ const showImage = function (indexReference) {
   });
 };
 
-carouselDots.forEach((dot, imageNumber) => {
-    dot.addEventListener("click", () => {
-        index = imageNumber;
-        showImage(index);
-    })
-})
-
-nextButton.addEventListener("click", () => {
+const nextImage = function () {
   if (index === carouselImages.length - 1) {
     index = 0;
   } else {
@@ -39,16 +32,38 @@ nextButton.addEventListener("click", () => {
   }
 
   showImage(index);
-});
+};
 
-previousButton.addEventListener("click", () => {
+const previousImage = function () {
   if (index === 0) {
     index = carouselImages.length - 1;
   } else {
     index -= 1;
   }
-
+  
   showImage(index);
+};
+
+carouselDots.forEach((dot, imageNumber) => {
+  dot.addEventListener("click", () => {
+    index = imageNumber;
+    showImage(index);
+  });
+});
+
+// nextButton.addEventListener("click", nextImage);
+
+nextButton.addEventListener("click", () => {
+  nextImage();
+  clearInterval(setIntervalID);
+});
+
+// previousButton.addEventListener("click", previousImage);
+
+previousButton.addEventListener("click", () => {
+  previousImage();
+  clearInterval(setIntervalID);
 });
 
 showImage(index);
+const setIntervalID = setInterval(nextImage, 5000);
